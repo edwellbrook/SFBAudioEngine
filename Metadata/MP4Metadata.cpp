@@ -359,7 +359,8 @@ bool SFB::Audio::MP4Metadata::_ReadMetadata(CFErrorRef *error)
 	if(nullptr != items) {
 		if(1 <= items->size && 1 <= items->elements[0].dataList.size) {
 			SFB::CFString releaseID((const char *)items->elements[0].dataList.elements[0].value, kCFStringEncodingUTF8);
-			CFDictionaryAddValue(mMetadata, kMusicBrainzReleaseIDKey, releaseID);
+			if (releaseID)
+				CFDictionaryAddValue(mMetadata, kMusicBrainzReleaseIDKey, releaseID);
 		}
 
 		MP4ItmfItemListFree(items), items = nullptr;
@@ -369,7 +370,8 @@ bool SFB::Audio::MP4Metadata::_ReadMetadata(CFErrorRef *error)
 	if(nullptr != items) {
 		if(1 <= items->size && 1 <= items->elements[0].dataList.size) {
 			SFB::CFString recordingID((const char *)items->elements[0].dataList.elements[0].value, kCFStringEncodingUTF8);
-			CFDictionaryAddValue(mMetadata, kMusicBrainzRecordingIDKey, recordingID);
+			if (recordingID)
+				CFDictionaryAddValue(mMetadata, kMusicBrainzRecordingIDKey, recordingID);
 		}
 
 		MP4ItmfItemListFree(items), items = nullptr;
